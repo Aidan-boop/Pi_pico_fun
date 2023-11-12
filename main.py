@@ -148,8 +148,7 @@ class Missile:
             ):
                 global flag_game
                 flag_game = 1
-#                 clear_screen()
-#                 print_logo(looser)
+
 
     @property
     def destroyed(self):
@@ -344,42 +343,15 @@ game_options = menus(game_menu)
 game_done = menus(game_over)
 quote_options = menus(sub_quote)
 
-## ideally want this done in the background as well
+# ideally want this done in the background as well
 connection = connect_to_internet()
 flag_quote = 1
-## not working rn ##
-# Unhandled exception in thread started by <bound_method>
-#Traceback (most recent call last):
-#  File "<stdin>", line 99, in establish_connection
-#  File "<stdin>", line 106, in grab_quote
-#  File "urequests.py", line 184, in post
-#  File "urequests.py", line 76, in request
-#OSError: -2
-#Quote = _thread.start_new_thread(connection.establish_connection, ())
-####################
-
-#Quote = connection.establish_connection()
-######## Needs to be tested #######
-# apparently _thread is buggy 
-#_thread.start_new_thread(connection.grab_quote, [,])
-# figure out how to thread connection + quote grab -> could add quote grab to first connection
-#Quote = connection.grab_quote()
-###################################
-# this isnt too bad rn but defenitely slows start up quite a bit
-
-
 
 clear()
 #############################################
 # main loop quick nav
 #############################################
 while True:
-    #### TODO ####
-    # ****Improve UI for temp****
-    # have a running average during the day and then one at night that can be viewed from a weather sub menu
-    # implement other games
-    # implement openai quote fetch 
-
     display.set_pen(background)
     display.clear()
     if button_x.read() or interrupt_flag:
@@ -390,33 +362,14 @@ while True:
         sub_menu = None
         last_time = curr_time - 2
         interrupt_flag = 0
-
-
-        
+  
     bme = bme280.BME280(i2c=i2c)          #BME280 object created
-    #print(bme.values)   # gives values as ('20.37C', '771.49hPa', '61.11%') ('T', 'P', 'H')
-    # find the first reading it gives is usually eronious and should be ignored
     vals = bme.values
     temp = vals[0]
     pressure = vals[1]
     humidity = vals[2]
-#     raw_temp = ''.join([i for i in temp if i in integer_contains])
-#     raw_humidity = ''.join([i for i in humidity if i in integer_contains])
-#     raw_pressure = ''.join([i for i in pressure if i in integer_contains])
-#     if flag_avg:
-#         avg_temp = float(raw_temp)
-#         avg_hum = float(raw_humidity)
-#         avg_pres = float(raw_pressure)
-#         flag_avg = 0
-#     else:
-#         avg_temp = (avg_temp + float(raw_temp)) / 2
-#         avg_hum = (avg_hum + float(raw_humidity)) / 2
-#         avg_pres = (avg_pres + float(raw_pressure)) / 2
-#     # going to need to sart a running average here
-#     # I think average would be pointless tbh
     curr_time = rtc.datetime()[-2]
-    #if curr_time == 0:
-        #last_time = -1
+
 #############################################
 # temperature quick nav 
 #############################################
@@ -473,7 +426,6 @@ while True:
             bat = Bat(int((HEIGHT-20)/2))
             flag = 0
             flag2 = 0
-            # have something like while 1 and then have an if interrupt_flag -> open menu with 3 options if quit is chosen then break from while loop
             while 1:
                 display.set_pen(background)
                 display.clear()
@@ -740,7 +692,7 @@ while True:
                     spaceship.move_left(3)
                 else:
                     spaceship.print_ship()
-                # movement working -> missiles appears to have broken
+                # movement 
                 if button_y.read():
                     spaceship.shoot()
 
@@ -773,11 +725,10 @@ while True:
                             enemy.missile_dir = -1
                         prev_clock_time = clock_time
                         random.choice(enemies).shoot()
-                        # has to be getting here because the value is getting updated
                 else:
                     flag_game = 1
                 display.update()
-                #print(f'current time: {clock_time}, previous time for shots: {prev_clock_time}, previous for movement: {prev_clock_time_movement}')
+                # Detect game over or menu
                 if button_x.read() or flag_game:
                     display.set_font('bitmap8')
                     display.set_pen(background)
@@ -790,13 +741,12 @@ while True:
                         game_options.create_menu()
                         display.update()
                         game_state = game_options.menu_poll()
-                    # add finishing code here for menus and such
+
                     if game_state == 'Quit':
                         game_state = None
                         flag_game = 0
                         break
                     elif game_state== 'Restart':
-                        # make this into a function
                         flag_game = 0
                         spaceship, SPACESHIP_Y, missiles, enemies, enemies_dir, enemies_moves_left, prev_clock_time_movement, prev_clock_time = invaders_startup()
                     else:
