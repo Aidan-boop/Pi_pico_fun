@@ -6,5 +6,5 @@ This utilizes a pi pico w, the BME 280 environment sensor, along with the pico d
 I used Thonny IDE to write and upload the uPython code. The code is seperated in to blocks with comments so it should be easy to grasp its organization.
 ## Final Product 
 Once everything is soldered together and the code is placed on the pi pico w then you have a fully working fun environment monitor. Use the buttons to navigate throught the menu and explore all the cool features this *very practical* environment monitor has. 
-![Screenshot](Images/IMG_4052.jpg)
+![Screenshot](Images/IMG_4052.jpg) 
 ![Screenshot](Images/IMG_4053.jpg)
