@@ -7,4 +7,4 @@ I used Thonny IDE to write and upload the uPython code. The code is seperated in
 ## Final Product 
 Once everything is soldered together and the code is placed on the pi pico w then you have a fully working fun environment monitor. Use the buttons to navigate throught the menu and explore all the cool features this *very practical* environment monitor has. 
 ![Screenshot](Images/IMG_4052.jpg)
-![Screenshot](Images/IMG_4054.jpg)
+![Screenshot](Images/IMG_4053.jpg)
